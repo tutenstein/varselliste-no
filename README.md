@@ -20,7 +20,11 @@ functions/              Cloud Functions (TypeScript, Node 22, europe-west1; Fire
   src/data/             Fylke/kommune kodları (Kartverket) ve kommune merkezleri (Wikidata) – üretilmiş
   scripts/build-regions.mjs  src/data/*'yı yeniden üretir (kommune değişikliklerinde, ör. 1.1.2028)
   src/cli/dryRun.ts     Veritabanına yazmadan canlı veriyi çekip dağılımı gösterir
-web/                    Astro statik site + Preact "island" (canlı akış), MapLibre harita   (Faz 4)
+web/                    Astro statik site + Preact "island" (canlı akış), MapLibre harita (OpenFreeMap)
+  src/views/            Sayfa gövdeleri (nb ve en aynı görünümü kullanır)
+  src/components/       LiveFeed (filtre, arama, yakınımda, liste, uyarı bantları, haberler), EventMap, StatsCard
+  src/i18n.ts           Rotalar, nb/en metinler, polis kategorileri ve DATEX kodları için etiketler
+  scripts/fetch-stats.mjs  SSB istatistikleri (derleme sırasında; hata olursa repodaki dosya kullanılır)
 firestore.rules         İstemciler yalnızca feeds/* (get) ve sources/* belgelerini okuyabilir
 ```
 
@@ -54,6 +58,22 @@ yol hasarı, iptal edilen feribot), MET/NVE uyarıları ve Nødvarsel. **Göster
 ışıkları, hız sınırları, planlı kapanmalar. Bunlar veritabanında yine de saklanır. NRK ve HRS başlıkları ayrı
 bir "Nyheter" bloğunda, olay listesine karışmadan gösterilir.
 
+## Site
+
+| Sayfa | Bokmål | İngilizce |
+|---|---|---|
+| Ana sayfa | `/` | `/en/` |
+| Fylke (15) | `/fylke/<slug>/` | `/en/county/<slug>/` |
+| Kommune (357) | `/kommune/<slug>/` | `/en/municipality/<slug>/` |
+| Dizin A–Å | `/kommuner/` | `/en/municipalities/` |
+| Hakkında + kaynak durumu | `/om/` | `/en/about/` |
+
+- Toplam 751 statik sayfa; sayfa başına ≤ 24 KB HTML, harita hariç ~27 KB gzip JavaScript.
+- Canlı veri: `<head>` içindeki satır içi fetch, island yüklenmeden `feeds/live` belgesini çekmeye başlar
+  (sayfa başına tek Firestore REST okuması; 7 g / 30 g seçilince `week` / `month` eklenir).
+- Harita yalnızca açılınca yüklenir; MapLibre CSS'i `?url` ile bağlanır, worker `setWorkerUrl` ile verilir.
+- Hosting başlıkları: HTML 5 dk, `/_astro/**` 1 yıl immutable; CSP, nosniff, Referrer-Policy, Permissions-Policy.
+
 ## Yerelde
 
 ```bash
@@ -61,4 +81,8 @@ cd functions && npm install && npm test
 npm run dry-run                      # canlı veriyi çeker, yalnızca dağılımı yazar
 npm run dry-run -- politiloggen nve  # yalnızca bazı kaynaklar
 npm run regions                      # kommune verisini yeniden üretir
+
+cd ../web && npm install && npm test && npm run check
+npm run build:fresh                  # SSB istatistiklerini çeker + derler
+npm run dev                          # http://localhost:4321 (canlı akışı okur)
 ```

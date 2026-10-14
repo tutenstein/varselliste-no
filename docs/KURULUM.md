@@ -6,7 +6,9 @@ Durum (2026-10-14):
 - ✅ Fonksiyonlar **europe-west1**'de (Cloud Scheduler europe-north1/north2'de yok), 8 zamanlanmış fonksiyon
 - ✅ Artifact Registry temizlik kuralı (1 günden eski imajlar silinir)
 - ✅ GitHub reposu: https://github.com/tutenstein/varselliste-no
-- ⏳ **Açık:** bütçe uyarısı (adım 1), deploy hesabı ve `FIREBASE_SERVICE_ACCOUNT` (adım 2, Faz 5), iletişim adresi ve alan adı (adım 3)
+- ✅ Site yayında: https://varselliste-no.web.app (Firebase Hosting, 751 sayfa, nb + en)
+- ⚠️ Hovedredningssentralen RSS'i Cloud Functions'tan erişilemiyor ("fetch failed"; bu makineden çalışıyor) – muhtemelen bulut IP'leri engelleniyor. Bkz. adım 4.
+- ⏳ **Açık:** bütçe uyarısı (adım 1), deploy hesabı ve `FIREBASE_SERVICE_ACCOUNT` (adım 2), iletişim adresi ve alan adı (adım 3)
 
 Hiçbir kaynak API anahtarı gerektirmiyor; Secret Manager'da şu an gizli bilgi yok.
 
@@ -44,7 +46,7 @@ Beklenen maliyet: ücretsiz kotalar içinde kalmalı.
 
 ## 3. Canlıya çıkmadan önce
 
-- **İletişim adresi.** `functions/.env` içindeki `INGEST_USER_AGENT` yer tutucusunu (`kontakt: TODO`) gerçek bir e-posta veya site adresiyle değiştir. MET Norway, iletişim bilgisi olmayan istemcileri uyarısız engelleyebiliyor. Aynı adres "Om" sayfasında **kaldırma talepleri** için de kullanılacak (suç kategorileri gösterildiği için).
+- **İletişim adresi.** `functions/.env` içindeki `INGEST_USER_AGENT` yer tutucusunu (`kontakt: TODO`) ve `web/src/config.ts` içindeki `CONTACT_EMAIL` değerini gerçek bir e-posta adresiyle değiştir. MET Norway, iletişim bilgisi olmayan istemcileri uyarısız engelleyebiliyor. Aynı adres "Om" sayfasında **kaldırma talepleri** için de kullanılacak (suç kategorileri gösterildiği için).
 - **Alan adı.** `.no` için Enhetsregisteret kaydı (yabancı şirket NUF olarak da olur) ve Norveç posta adresi gerekiyor. Bkz. [veri-kaynaklari.md §6](veri-kaynaklari.md).
 
 ## 4. İsteğe bağlı e-postalar
@@ -52,6 +54,7 @@ Beklenen maliyet: ücretsiz kotalar içinde kalmalı.
 - `politiloggen@politiet.no`: kullanımı bildirmek ve uygun yoklama sıklığını sormak (hız sınırı belgelenmemiş; şu an 3 dakikada bir).
 - `datex@vegvesen.no`: WFS'nin bu amaçla 2 dakikada bir kullanımının uygun olduğunu ve DATEX şartlarının WFS için de geçerli olup olmadığını teyit etmek.
 - DSB: Nødvarsel için yapılandırılmış (CAP/JSON) akış; BRIS verisi.
+- Hovedredningssentralen (`hovedredningssentralen.no`): RSS akışına Google Cloud'dan (europe-west1) erişim engelli görünüyor. Akışın sunucudan okunmasına izin verip vermeyeceklerini sor; izin yoksa kaynağı kapatırız (`functions/src/index.ts` → `ingestNews` içindeki HRS çağrısı).
 
 ## İsteğe bağlı
 
