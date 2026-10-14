@@ -7,8 +7,9 @@ Durum (2026-10-14):
 - ✅ Artifact Registry temizlik kuralı (1 günden eski imajlar silinir)
 - ✅ GitHub reposu: https://github.com/tutenstein/varselliste-no
 - ✅ Site yayında: https://varselliste-no.web.app (Firebase Hosting, 751 sayfa, nb + en)
-- ⚠️ Hovedredningssentralen RSS'i Cloud Functions'tan erişilemiyor ("fetch failed"; bu makineden çalışıyor) – muhtemelen bulut IP'leri engelleniyor. Bkz. adım 4.
-- ⏳ **Açık:** bütçe uyarısı (adım 1), deploy hesabı ve `FIREBASE_SERVICE_ACCOUNT` (adım 2), iletişim adresi ve alan adı (adım 3)
+- ✅ Deploy hesabı ve `FIREBASE_SERVICE_ACCOUNT` secret'ı; GitHub Actions: deploy (push), nightly (gece), health (3 saatte bir)
+- ✅ Hovedredningssentralen kaynağı kaldırıldı (2026-10-14; Cloud Functions'tan erişilemiyordu)
+- ⏳ **Açık:** bütçe uyarısı (adım 1), iletişim adresi ve alan adı (adım 3)
 
 Hiçbir kaynak API anahtarı gerektirmiyor; Secret Manager'da şu an gizli bilgi yok.
 
@@ -23,7 +24,7 @@ Beklenen maliyet: ücretsiz kotalar içinde kalmalı.
 - Firestore: yazımlar değişen olay sayısıyla ölçeklenir (içerik hash'i ile değişmeyen yazımlar atlanır); ziyaretçi başına tek okuma
 - Cloud Functions / Cloud Run: ücretsiz kota içinde
 
-## 2. GitHub Actions için deploy hesabı (Faz 5'te)
+## 2. GitHub Actions için deploy hesabı ✅
 
 1. https://console.cloud.google.com/iam-admin/serviceaccounts?project=varselliste-no → **Create service account**, ad: `github-deploy`
 2. Roller (yalnızca `firebase deploy --only functions,firestore,hosting` için gerekenler):
@@ -54,7 +55,6 @@ Beklenen maliyet: ücretsiz kotalar içinde kalmalı.
 - `politiloggen@politiet.no`: kullanımı bildirmek ve uygun yoklama sıklığını sormak (hız sınırı belgelenmemiş; şu an 3 dakikada bir).
 - `datex@vegvesen.no`: WFS'nin bu amaçla 2 dakikada bir kullanımının uygun olduğunu ve DATEX şartlarının WFS için de geçerli olup olmadığını teyit etmek.
 - DSB: Nødvarsel için yapılandırılmış (CAP/JSON) akış; BRIS verisi.
-- Hovedredningssentralen (`hovedredningssentralen.no`): RSS akışına Google Cloud'dan (europe-west1) erişim engelli görünüyor. Akışın sunucudan okunmasına izin verip vermeyeceklerini sor; izin yoksa kaynağı kapatırız (`functions/src/index.ts` → `ingestNews` içindeki HRS çağrısı).
 
 ## İsteğe bağlı
 

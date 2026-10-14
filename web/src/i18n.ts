@@ -44,7 +44,6 @@ const nb = {
   nav: { events: "Hendelser", directory: "Kommuner", about: "Om tjenesten" },
   skip: "Hopp til innholdet",
   emergency: "Ved nødsituasjon: ring 110 (brann), 112 (politi) eller 113 (ambulanse)",
-  emergencyShort: "Nødnummer: 110 brann, 112 politi, 113 ambulanse",
   notOfficial: "Varsellisten er en uavhengig sammenstilling av åpne data og ingen offentlig tjeneste.",
   live: "Live",
   updated: "Oppdatert",
@@ -117,11 +116,10 @@ const nb = {
     nve: "Varsom (NVE)",
     nodvarsel: "nodvarsel.no",
     nrk: "NRK",
-    hrs: "Hovedredningssentralen",
   } as Record<string, string>,
   newsTitle: "Nyheter",
-  newsFrom: { nrk: "Nyheter fra NRK", hrs: "Fra Hovedredningssentralen" } as Record<string, string>,
-  newsNote: "Overskrifter om hendelser fra NRK og Hovedredningssentralen, uendret og med lenke til saken.",
+  newsFrom: { nrk: "Nyheter fra NRK" } as Record<string, string>,
+  newsNote: "Overskrifter om hendelser fra NRK, uendret og med lenke til saken.",
   // pages
   homeTitle: "Varsellisten – ulykker, brann og trafikkhendelser i sanntid",
   homeLead: "Siste hendelser i Norge",
@@ -166,7 +164,6 @@ const en: Dict = {
   nav: { events: "Incidents", directory: "Municipalities", about: "About" },
   skip: "Skip to content",
   emergency: "In an emergency call 110 (fire), 112 (police) or 113 (ambulance)",
-  emergencyShort: "Emergency numbers: 110 fire, 112 police, 113 ambulance",
   notOfficial: "Varsellisten is an independent compilation of open data and not a government service.",
   live: "Live",
   updated: "Updated",
@@ -239,11 +236,10 @@ const en: Dict = {
     nve: "Varsom (NVE)",
     nodvarsel: "nodvarsel.no",
     nrk: "NRK",
-    hrs: "Joint Rescue Coordination Centre",
   },
   newsTitle: "News",
-  newsFrom: { nrk: "News from NRK", hrs: "From the Joint Rescue Coordination Centre" },
-  newsNote: "Headlines about incidents from NRK and the Joint Rescue Coordination Centre, unchanged and linked to the story (in Norwegian).",
+  newsFrom: { nrk: "News from NRK" },
+  newsNote: "Headlines about incidents from NRK, unchanged and linked to the story (in Norwegian).",
   homeTitle: "Varsellisten – live accidents, fires and traffic incidents in Norway",
   homeLead: "Latest incidents in Norway",
   countiesTitle: "Counties",
@@ -362,7 +358,6 @@ export function typeLabel(lang: Lang, ev: FeedEvent): string {
       return en && ev.e ? ev.e.ti : ev.ti;
     case "nodvarsel":
     case "nrk":
-    case "hrs":
       return ev.ti;
     case "vegvesen": {
       const label = VEGVESEN[ev.t] ?? VEGVESEN[ev.t.split("/")[0]];

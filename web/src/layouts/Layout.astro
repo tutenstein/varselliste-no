@@ -26,11 +26,6 @@ const navItems = [
   { href: routes.about(lang), label: tr.nav.about },
 ];
 const isCurrent = (href: string) => (href === routes.home(lang) ? path === href : path.startsWith(href));
-const emergency = [
-  { n: "110", label: nb ? "Brann" : "Fire" },
-  { n: "112", label: nb ? "Politi" : "Police" },
-  { n: "113", label: nb ? "Ambulanse" : "Ambulance" },
-];
 ---
 
 <!doctype html>
@@ -88,15 +83,6 @@ const emergency = [
           }
         </nav>
         <div class="header-actions">
-          <div class="emergency" role="group" aria-label={tr.emergencyShort}>
-            {
-              emergency.map((e) => (
-                <a class="call" href={`tel:${e.n}`} title={`${e.label}: ${e.n}`} aria-label={`${e.label}: ${e.n}`}>
-                  {e.n}
-                </a>
-              ))
-            }
-          </div>
           <a class="lang-switch" href={other === "en" ? enPath : nbPath} hreflang={other} lang={other}>
             {other === "en" ? "EN" : "NO"}
           </a>
@@ -119,8 +105,8 @@ const emergency = [
           <p class="muted small">
             {
               nb
-                ? "Data fra Politiet (Politiloggen), Statens vegvesen, Meteorologisk institutt, NVE/Varsom, nodvarsel.no (DSB), NRK og Hovedredningssentralen. Statistikk fra SSB."
-                : "Data from the Norwegian Police (Politiloggen), the Norwegian Public Roads Administration, MET Norway, NVE/Varsom, nodvarsel.no (DSB), NRK and the Joint Rescue Coordination Centre. Statistics from Statistics Norway (SSB)."
+                ? "Data fra Politiet (Politiloggen), Statens vegvesen, Meteorologisk institutt, NVE/Varsom, nodvarsel.no (DSB) og NRK. Statistikk fra SSB."
+                : "Data from the Norwegian Police (Politiloggen), the Norwegian Public Roads Administration, MET Norway, NVE/Varsom, nodvarsel.no (DSB) and NRK. Statistics from Statistics Norway (SSB)."
             }
           </p>
           <p class="muted small">

@@ -1,0 +1,37 @@
+name: Health check
+
+# Fails (and GitHub emails the repo owner) when the public feed or a source goes stale.
+# Reads only the public feed document — no credentials needed.
+on:
+  schedule:
+    - cron: "23 */3 * * *" # every 3 hours
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check feed and sources
+        run: |
+          set -euo pipefail
+          url='https://firestore.googleapis.com/v1/projects/varselliste-no/databases/(default)/documents/feeds/live?mask.fieldPaths=generatedAt&mask.fieldPaths=sources&mask.fieldPaths=count'
+          doc=$(curl -sf --retry 3 "$url")
+          now=$(date +%s)
+          gen=$(date -d "$(jq -r '.fields.generatedAt.timestampValue' <<<"$doc")" +%s)
+          echo "feeds/live: $(jq -r '.fields.count.integerValue' <<<"$doc") events, generated $(( (now - gen) / 60 )) min ago"
+          status=0
+          if (( now - gen > 15 * 60 )); then echo "::error::feeds/live is older than 15 minutes"; status=1; fi
+          # Max minutes since the last successful run, per source (schedule × 5–10).
+          declare -A limit=([politiloggen]=20 [vegvesen]=15 [nodvarsel]=15 [metalerts]=40 [nve]=90 [nrk]=60)
+          sources=$(jq -r '.fields.sources.stringValue' <<<"$doc")
+          for s in politiloggen vegvesen nodvarsel metalerts nve nrk; do
+            ok=$(jq -r --arg s "$s" '.[$s].ok // 0' <<<"$sources")
+            age=$(( now - ok / 1000 ))
+            echo "$s: last success $(( age / 60 )) min ago, consecutive failures $(jq -r --arg s "$s" '.[$s].fails // 0' <<<"$sources")"
+            if (( age > ${limit[$s]} * 60 )); then echo "::error::$s has not succeeded for $(( age / 60 )) minutes"; status=1; fi
+          done
+          exit $status

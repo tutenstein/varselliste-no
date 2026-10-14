@@ -11,7 +11,7 @@ export type Category =
   | "farevarsel"
   | "nodvarsel"
   | "vegarbeid";
-export type SourceId = "politiloggen" | "vegvesen" | "metalerts" | "nve" | "nodvarsel" | "nrk" | "hrs";
+export type SourceId = "politiloggen" | "vegvesen" | "metalerts" | "nve" | "nodvarsel" | "nrk";
 export type Shard = "live" | "week" | "month";
 
 export interface FeedEvent {
@@ -95,7 +95,7 @@ export async function fetchShard(shard: Shard, first?: Promise<FeedShard & { par
 // ---------------------------------------------------------------- kinds
 
 export const isWarning = (ev: FeedEvent) => ev.c === "farevarsel" || ev.c === "nodvarsel";
-export const isNews = (ev: FeedEvent) => ev.s === "nrk" || ev.s === "hrs";
+export const isNews = (ev: FeedEvent) => ev.s === "nrk";
 
 // ---------------------------------------------------------------- filtering
 

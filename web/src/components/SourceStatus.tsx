@@ -11,10 +11,9 @@ const EXPECTED_MS: Record<string, number> = {
   nodvarsel: 8 * MIN,
   metalerts: 30 * MIN,
   nrk: 45 * MIN,
-  hrs: 45 * MIN,
   nve: 90 * MIN,
 };
-const ORDER = ["politiloggen", "vegvesen", "nodvarsel", "metalerts", "nve", "nrk", "hrs"];
+const ORDER = ["politiloggen", "vegvesen", "nodvarsel", "metalerts", "nve", "nrk"];
 
 export default function SourceStatus({ lang }: { lang: Lang }) {
   const tr = t(lang);

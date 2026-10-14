@@ -103,7 +103,7 @@ Yoklama sıklığı bültenler ve trafikte ~2 dk, haberlerde ~30 dk. Geçmiş en
 | İsveç özelliği | Norveç'te | Kaynak | Not |
 |---|---|---|---|
 | Trafik kazaları ve aksaklıklar (canlı) | ✅ **Tam** | Vegvesen WFS (veya DATEX) | Trafikverket'in karşılığı. Koordinat ve yol numarası var. Kommune adı konum metninden ya da koordinattan çıkarılır. |
-| Yangın ve kurtarma (canlı) | ✅ **İyi** | **Politiloggen API** (Brann, Redning, Ulykke, Savnet, Sjø, Trafikk) + Nødvarsel; ek olarak NRK ve HRS | Polisen'in karşılığı, üstelik daha hızlı: konular gerçek zamanlı açılıp güncelleniyor ve aktif/pasif bilgisi var. Yalnızca polisin karıştığı olaylar görünüyor; 110 merkezleri ayrı bir liste yayımlamıyor. |
+| Yangın ve kurtarma (canlı) | ✅ **İyi** | **Politiloggen API** (Brann, Redning, Ulykke, Savnet, Sjø, Trafikk) + Nødvarsel; ek olarak NRK | Polisen'in karşılığı, üstelik daha hızlı: konular gerçek zamanlı açılıp güncelleniyor ve aktif/pasif bilgisi var. Yalnızca polisin karıştığı olaylar görünüyor; 110 merkezleri ayrı bir liste yayımlamıyor. |
 | Hava uyarısı şeridi | ✅ **İsveç'ten iyi** | MetAlerts + NVE (sel, heyelan) | Kommune listesi ve İngilizce metin var. Deniz uyarıları (48/49) şeridi boğar; varsayılan olarak yalnızca kara uyarıları gösterilmeli. |
 | Resmi acil uyarı (VMA karşılığı) | ✅ (İsveç'te yapılamamıştı) | Nødvarsel RSS | Seyrek ama kritik. Sayfanın üstünde ayrı kırmızı bir bant olarak gösterilmeli. |
 | 24 sa / 7 g / 30 g | ✅ | Kendi veritabanımız | MetAlerts `all.json` ile 30 günlük uyarı geçmişi ilk çalışmada doldurulabilir. Vegvesen'de geçmiş yok (yalnızca aktif durumlar). |
@@ -232,8 +232,9 @@ Kayıt yalnızca bir kayıt kuruluşu (registrar) üzerinden yapılıyor.
    - Başlık + bağlantı + zaman; kommune başlıktan çıkarılır.
    - Test kayıtları filtrelenir.
    - Sayfanın üstünde kırmızı bant.
-5. **NRK bölge `siste.rss` + Hovedredningssentralen RSS** (Faz 2 kararıyla MVP'de)
-   - Yalnızca **değiştirilmemiş başlık + bağlantı**, ayrıca "Nyheter fra NRK" / "Hovedredningssentralen" etiketi.
+5. **NRK bölge `siste.rss`** (Faz 2 kararıyla MVP'de)
+   - Yalnızca **değiştirilmemiş başlık + bağlantı**, ayrıca "Nyheter fra NRK" etiketi.
+   - Hovedredningssentralen RSS'i de MVP'deydi; Cloud Functions'tan erişilemediği için (bulut IP'leri engelleniyor) **2026-10-14'te kaldırıldı**.
    - NRK şartı içeriğin bizimkinden ayrılmasını istiyor. Bu yüzden olay listesine karışmayacak; ana sayfada ve fylke/kommune sayfalarında **ayrı bir "Nyheter" bloğu** olacak (öneri; Faz 4'te kesinleşecek).
    - Olaylarla ilgili haberler kendi anahtar kelime sınıflandırıcımızla seçilecek (yangın, kaza, kurtarma, kapanan yol, kayıp …). Kural, Faz 3'te gerçek veriyle yazılacak.
    - NRK `dc:creator` ve görseller saklanmayacak.
@@ -280,9 +281,10 @@ Kayıt yalnızca bir kayıt kuruluşu (registrar) üzerinden yapılıyor.
 | Bölgeler | Firestore **europe-north1** (`(default)`), Cloud Functions **europe-west1** (Cloud Scheduler europe-north1/north2'de yok; Norveç'te GCP bölgesi yok) |
 | GitHub | Private repo; kullanıcı açıp URL'yi verecek |
 | İletişim e-postası | Şimdilik yer tutucu. ⏳ Canlıya çıkmadan önce gerçek adres gerekli (MET User-Agent şartı + "Om" sayfasındaki kaldırma talebi adresi). |
-| MVP kaynakları | Politiloggen, Statens vegvesen (WFS), MET MetAlerts, NVE (sel + heyelan), Nødvarsel, NRK bölge RSS, Hovedredningssentralen RSS. İstatistik: SSB 12058 + 11342. Referans: Kartverket + Wikidata. |
+| MVP kaynakları | Politiloggen, Statens vegvesen (WFS), MET MetAlerts, NVE (sel + heyelan), Nødvarsel, NRK bölge RSS. (Hovedredningssentralen RSS 2026-10-14'te kaldırıldı: Google Cloud'dan erişim engelli.) İstatistik: SSB 12058 + 11342. Referans: Kartverket + Wikidata. |
 | Suç kategorileri | Varsayılan olarak **gösterilecek**. Önlemler: olay başına ayrı sayfa yok; "Om" sayfasında kaldırma talebi adresi. |
 | `area` (Politiloggen) | politiet.no'daki gibi gösterilecek (`Kommune, Område`); haritada kommune merkezi. |
+| Acil numaralar (110/112/113) | Başlıkta düğme yok; yalnızca altbilgide bilgilendirme metni (karar: 2026-10-14). |
 
 ---
 

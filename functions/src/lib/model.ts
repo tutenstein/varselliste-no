@@ -1,4 +1,4 @@
-export type SourceId = "politiloggen" | "vegvesen" | "metalerts" | "nve" | "nodvarsel" | "nrk" | "hrs";
+export type SourceId = "politiloggen" | "vegvesen" | "metalerts" | "nve" | "nodvarsel" | "nrk";
 
 /** Our own taxonomy, shared by every source. */
 export type Category =
@@ -14,7 +14,7 @@ export type Category =
 
 export type EventStatus = "aktiv" | "avsluttet" | "ukjent";
 
-/** News items (NRK, HRS) are shown in their own block, never mixed into the incident list. */
+/** News items (NRK) are shown in their own block, never mixed into the incident list. */
 export type EventKind = "hendelse" | "varsel" | "nyhet";
 
 /**

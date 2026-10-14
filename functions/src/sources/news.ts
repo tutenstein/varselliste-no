@@ -1,25 +1,22 @@
 import { fetchText, sleep } from "../lib/http";
 import { encodeGeohash } from "../lib/geohash";
-import { Category, eventId, ParsedEvent, SourceId } from "../lib/model";
+import { Category, eventId, ParsedEvent } from "../lib/model";
 import { findFylke, findKommuneInText, kommuneCentre } from "../lib/regions";
 import { parseRss, RssItem, rssDate } from "../lib/rss";
 
 /**
- * News links shown in a separate "Nyheter" block, never mixed into the incident list.
+ * NRK news links, shown in a separate "Nyheter" block, never mixed into the incident list.
  *
- * NRK (https://www.nrk.no/rss/): free to use with links straight to nrk.no, labelled
+ * Terms (https://www.nrk.no/rss/): free to use with links straight to nrk.no, labelled
  * "Nyheter fra NRK", kept apart from other content; titles and texts must not be
  * altered and articles, parts of articles or images must not be copied. We store only
  * the unchanged title, the link and the time — the description is used for nothing.
  *
- * Hovedredningssentralen (https://www.hovedredningssentralen.no/feed/): no reuse terms
- * found, so likewise title + link only.
- *
  * Only incident-related items are kept (our own keyword classification of the title).
+ * (Hovedredningssentralen's RSS was dropped on 2026-10-14: it refuses connections from
+ * Google Cloud.)
  */
 export const NRK_ATTRIBUTION = "Nyheter fra NRK";
-export const HRS_ATTRIBUTION = "Kilde: Hovedredningssentralen";
-export const HRS_FEED = "https://www.hovedredningssentralen.no/feed/";
 
 /** NRK district feeds → the fylker they cover. */
 export const NRK_FEEDS: { district: string; url: string; fylker: string[] }[] = [
@@ -116,23 +113,19 @@ export function classifyHeadline(title: string): Category | null {
   return null;
 }
 
-/** Hovedredningssentralen also posts organisational news; only rescue operations are kept. */
-const HRS_INCIDENT = re(s("redningsaksjon|leteaksjon|leiteaksjon|savnet|nødsignal|nødpeil|kantra|kantret|forlis|grunnstøt|evakuer"), w("ulykke|ulukke"));
 
-/** NRK article id ("…-1.18054427"), WordPress post id ("?p=1234") or the last path segment. */
+/** NRK article id ("…-1.18054427"), otherwise the last path segment. */
 export function newsItemId(item: RssItem): string {
   const nrk = /-(\d+\.\d+)(?:[/?#]|$)/u.exec(item.link ?? "");
   if (nrk) return nrk[1];
-  const wp = /[?&]p=(\d+)/u.exec(item.guid ?? "");
-  if (wp) return `p${wp[1]}`;
   const url = item.guid ?? item.link ?? item.title;
   const last = url.split(/[/?#]/u).filter(Boolean).pop() ?? url;
   return last.replace(/[^\w.-]/gu, "").slice(0, 120) || "ukjent";
 }
 
-export function normalizeNews(source: Extract<SourceId, "nrk" | "hrs">, item: RssItem, fylker: string[] | null, now = new Date()): ParsedEvent | null {
+export function normalizeNrk(item: RssItem, fylker: string[] | null, now = new Date()): ParsedEvent | null {
   const title = item.title.trim();
-  const category = source === "hrs" ? (HRS_INCIDENT.test(title) ? "redning" : null) : classifyHeadline(title);
+  const category = classifyHeadline(title);
   if (!title || !category) return null;
   const kommune = findKommuneInText(title, fylker ?? undefined);
   const fylke = kommune ? { nr: kommune.fylkeNr, navn: kommune.fylkeNavn } : fylker?.length === 1 ? findFylke(fylker[0]) : null;
@@ -144,12 +137,12 @@ export function normalizeNews(source: Extract<SourceId, "nrk" | "hrs">, item: Rs
     // Only what we are allowed to show: unchanged title, link, time.
     raw: { title: item.title, link: item.link, guid: item.guid, time: time.toISOString() },
     event: {
-      id: eventId(source, id),
-      source,
+      id: eventId("nrk", id),
+      source: "nrk",
       sourceId: id,
       groupId: null,
       sourceUrl: item.link,
-      attribution: source === "nrk" ? NRK_ATTRIBUTION : HRS_ATTRIBUTION,
+      attribution: NRK_ATTRIBUTION,
       kind: "nyhet",
       category,
       subtype: category,

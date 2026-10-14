@@ -1,0 +1,32 @@
+name: Nightly site rebuild
+
+# Rebuilds the static site with fresh SSB statistics and redeploys hosting only.
+# Runs on GitHub, so this batch work costs nothing on Firebase.
+on:
+  schedule:
+    - cron: "40 1 * * *" # 01:40 UTC every day (03:40 Oslo summer time)
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-refs/heads/main
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci --prefix web
+      - run: npm --prefix web run build:fresh
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      - run: npx --yes firebase-tools@15 deploy --only hosting --project varselliste-no --non-interactive

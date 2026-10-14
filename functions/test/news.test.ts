@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { parseRss } from "../src/lib/rss";
-import { classifyHeadline, newsItemId, normalizeNews, NRK_FEEDS } from "../src/sources/news";
+import { classifyHeadline, normalizeNrk, NRK_FEEDS } from "../src/sources/news";
 
 const read = (f: string) => parseRss(readFileSync(join(__dirname, "fixtures", f), "utf8"));
 const now = new Date("2026-10-14T09:00:00Z");
@@ -47,7 +47,7 @@ describe("headline classification", () => {
 describe("NRK", () => {
   const items = read("nrk-vestland.xml");
   const vestland = NRK_FEEDS.find((f) => f.district === "vestland")!;
-  const parsed = items.map((i) => normalizeNews("nrk", i, vestland.fylker, now)).filter((p) => p !== null);
+  const parsed = items.map((i) => normalizeNrk(i, vestland.fylker, now)).filter((p) => p !== null);
 
   it("keeps only incident headlines, unchanged, with link and time", () => {
     expect(parsed.length).toBeGreaterThan(0);
@@ -70,20 +70,5 @@ describe("NRK", () => {
   it("covers every fylke with a district feed", () => {
     const covered = new Set(NRK_FEEDS.flatMap((f) => f.fylker));
     expect(covered.size).toBe(15);
-  });
-});
-
-describe("Hovedredningssentralen", () => {
-  const items = read("hrs-feed.xml");
-
-  it("keeps rescue operations, not organisational news", () => {
-    const kept = items.map((i) => normalizeNews("hrs", i, null, now)).filter((p) => p !== null);
-    expect(kept.map((p) => p.event.title)).toEqual(["Redningsaksjon ved Narvik Havn"]);
-    expect(kept[0].event.kommuneNr).toBe("1806");
-    expect(kept[0].event.category).toBe("redning");
-  });
-
-  it("uses the WordPress post id", () => {
-    expect(newsItemId({ title: "x", link: "https://www.hovedredningssentralen.no/a/", guid: "https://www.hovedredningssentralen.no/?p=21458", pubDate: null, updated: null, categories: [], description: null })).toBe("p21458");
   });
 });

@@ -11,7 +11,7 @@ import { fetchRecords, normalizeRecord } from "../sources/vegvesen";
 import { fetchMetAlerts, isActual, normalizeMetAlert } from "../sources/metalerts";
 import { fetchNveWarnings, Hazard, normalizeNve } from "../sources/nve";
 import { fetchNodvarsel, isTestAlert, normalizeNodvarsel } from "../sources/nodvarsel";
-import { fetchNrk, fetchRss, HRS_FEED, normalizeNews } from "../sources/news";
+import { fetchNrk, normalizeNrk } from "../sources/news";
 import { sleep } from "../lib/http";
 
 function count<T>(items: T[], key: (t: T) => string): Record<string, number> {
@@ -134,19 +134,12 @@ const sources: Record<string, () => Promise<void>> = {
     let items = 0;
     for (const { feed, items: list } of feeds) {
       items += list.length;
-      const parsed = list.map((i) => normalizeNews("nrk", i, feed.fylker)).filter((p): p is ParsedEvent => p !== null);
+      const parsed = list.map((i) => normalizeNrk(i, feed.fylker)).filter((p): p is ParsedEvent => p !== null);
       console.log(`NRK ${feed.district}: ${list.length} items, ${parsed.length} incident-related`);
       all.push(...parsed);
     }
     summarize(`NRK (of ${items} items)`, all);
     console.log("kept headlines:", all.map((p) => `[${p.event.category}] ${p.event.title} → ${p.event.kommuneNavn ?? p.event.fylkeNavn ?? "-"}`));
-  },
-
-  async hrs() {
-    const list = await fetchRss(HRS_FEED);
-    const parsed = list.map((i) => normalizeNews("hrs", i, null)).filter((p): p is ParsedEvent => p !== null);
-    summarize("Hovedredningssentralen", parsed);
-    console.log("headlines:", parsed.map((p) => `${p.event.startTime.toISOString().slice(0, 10)} ${p.event.title} → ${p.event.kommuneNavn ?? "-"} (${p.event.sourceId})`));
   },
 };
 

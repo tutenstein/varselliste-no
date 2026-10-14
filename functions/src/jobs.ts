@@ -7,7 +7,7 @@ import { fetchActiveRecordIds, fetchRecords, normalizeRecord } from "./sources/v
 import { fetchMetAlerts, isActual, MetAlertFeature, normalizeMetAlert } from "./sources/metalerts";
 import { fetchNveWarnings, Hazard, normalizeNve } from "./sources/nve";
 import { fetchNodvarsel, isTestAlert, normalizeNodvarsel } from "./sources/nodvarsel";
-import { fetchNrk, fetchRss, HRS_FEED, normalizeNews } from "./sources/news";
+import { fetchNrk, normalizeNrk } from "./sources/news";
 
 const MINUTE = 60_000;
 
@@ -256,7 +256,7 @@ export async function runNodvarselJob(now = new Date()): Promise<RunStats> {
   return { fetched: parsed.length, written: result.written, unchanged: result.unchanged, ended, mode: "live" };
 }
 
-// ---------------------------------------------------------------- News (NRK, HRS)
+// ---------------------------------------------------------------- News (NRK)
 
 interface NewsState {
   hashes: Record<string, string>;
@@ -267,20 +267,11 @@ export async function runNrkJob(now = new Date()): Promise<RunStats> {
   const feeds = await fetchNrk();
   const items = feeds.reduce((n, f) => n + f.items.length, 0);
   const parsed = feeds.flatMap(({ feed, items: list }) =>
-    list.map((i) => normalizeNews("nrk", i, feed.fylker, now)).filter((p): p is ParsedEvent => p !== null),
+    list.map((i) => normalizeNrk(i, feed.fylker, now)).filter((p): p is ParsedEvent => p !== null),
   );
   const result = await upsertEvents(dedupe(parsed), state.hashes ?? {});
   await writeState("nrk", { hashes: result.hashes });
   return { fetched: items, written: result.written, unchanged: result.unchanged, mode: `${parsed.length} relevante` };
-}
-
-export async function runHrsJob(now = new Date()): Promise<RunStats> {
-  const state = await readState<NewsState>("hrs");
-  const items = await fetchRss(HRS_FEED);
-  const parsed = items.map((i) => normalizeNews("hrs", i, null, now)).filter((p): p is ParsedEvent => p !== null);
-  const result = await upsertEvents(parsed, state.hashes ?? {});
-  await writeState("hrs", { hashes: result.hashes });
-  return { fetched: items.length, written: result.written, unchanged: result.unchanged, mode: `${parsed.length} relevante` };
 }
 
 /** The same NRK article can appear in two district feeds. */

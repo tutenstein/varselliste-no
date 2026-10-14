@@ -1,7 +1,7 @@
 # Varsellisten (varselliste-no)
 
 Norveç'teki kamuya açık olay ve uyarı verilerini (Politiloggen, Statens vegvesen, MET, NVE, Nødvarsel,
-NRK, Hovedredningssentralen) toplayıp kendi veritabanımızda (Firestore) biriktiren ve Norveççe
+NRK) toplayıp kendi veritabanımızda (Firestore) biriktiren ve Norveççe
 (bokmål) / İngilizce bir web sitesinde gösteren servis. İsveç'teki `varningslista-se` projesinin
 Norveç sürümü; ayrı Firebase projesi, ayrı repo, ayrı veritabanı.
 
@@ -26,6 +26,7 @@ web/                    Astro statik site + Preact "island" (canlı akış), Map
   src/i18n.ts           Rotalar, nb/en metinler, polis kategorileri ve DATEX kodları için etiketler
   scripts/fetch-stats.mjs  SSB istatistikleri (derleme sırasında; hata olursa repodaki dosya kullanılır)
 firestore.rules         İstemciler yalnızca feeds/* (get) ve sources/* belgelerini okuyabilir
+.github/workflows/      deploy (push), nightly (gece yeniden derleme), health (3 saatte bir kontrol)
 ```
 
 ## Yük dağılımı: Firebase ↔ GitHub Actions
@@ -47,7 +48,7 @@ firestore.rules         İstemciler yalnızca feeds/* (get) ve sources/* belgele
 | `ingestVegvesen` | 2 dk | WFS'den yalnızca son güncellenen kayıtlar (`LAST_UPDATE_TIME`); 30 dakikada bir kimlik görüntüsüyle biten kayıtlar kapatılır. |
 | `ingestNodvarsel` | 2 dk | Aktif acil uyarılar; geçmiş liste saatte bir ve bir uyarı bittiğinde. |
 | `ingestMetAlerts` | 10 dk | Kara uyarıları (nb + en), `If-Modified-Since` ile; ilk çalışmada son 30 gün. |
-| `ingestNews` | 15 dk | 12 NRK bölge akışı + HRS; yalnızca olayla ilgili başlıklar (başlık + bağlantı). |
+| `ingestNews` | 15 dk | 12 NRK bölge akışı; yalnızca olayla ilgili başlıklar (başlık + bağlantı). |
 | `ingestNve` | 30 dk | Sel ve heyelan uyarıları (nb + en). |
 | `publishFeeds` | 2 dk | Değişen olayları `feeds/live` (48 sa + aktif uyarılar), `feeds/week`, `feeds/month` belgelerine işler; 1 MiB'a yaklaşan akış `month-2…` diye bölünür. |
 | `closeExpired` | 30 dk | Bitiş zamanı geçmiş olayları kapatır. |
@@ -55,7 +56,7 @@ firestore.rules         İstemciler yalnızca feeds/* (get) ve sources/* belgele
 **Listede gösterilenler:** Politiloggen'in bütün kategorileri (suç dahil, politiet.no'daki gibi; trafik denetimleri
 "Kriminalitet" altında), Vegvesen'in gerçek olayları (kaza, durmuş araç, yolda hayvan/cisim, heyelan, sel,
 yol hasarı, iptal edilen feribot), MET/NVE uyarıları ve Nødvarsel. **Gösterilmeyenler:** yol çalışmaları, trafik
-ışıkları, hız sınırları, planlı kapanmalar. Bunlar veritabanında yine de saklanır. NRK ve HRS başlıkları ayrı
+ışıkları, hız sınırları, planlı kapanmalar. Bunlar veritabanında yine de saklanır. NRK başlıkları ayrı
 bir "Nyheter" bloğunda, olay listesine karışmadan gösterilir.
 
 ## Site

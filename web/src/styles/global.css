@@ -211,31 +211,6 @@ h3 {
   gap: 8px;
 }
 
-.emergency {
-  display: inline-flex;
-  border-radius: 999px;
-  overflow: hidden;
-  background: var(--alarm);
-}
-.emergency .call {
-  padding: 6px 9px;
-  color: var(--alarm-ink);
-  font-weight: 700;
-  font-size: 0.875rem;
-  font-variant-numeric: tabular-nums;
-}
-.emergency .call + .call {
-  border-left: 1px solid color-mix(in srgb, var(--alarm-ink) 35%, transparent);
-}
-.emergency .call:hover {
-  text-decoration: none;
-  background: color-mix(in srgb, #000 12%, var(--alarm));
-}
-.emergency .call:focus-visible {
-  outline-offset: -3px;
-  outline-color: var(--alarm-ink);
-}
-
 .lang-switch {
   padding: 6px 10px;
   border: 1px solid var(--line-strong);
@@ -1285,7 +1260,7 @@ table.sources th {
   color: var(--alarm);
 }
 
-/* ------------------------------------------------------------ news (NRK, HRS): kept apart from the incident list */
+/* ------------------------------------------------------------ news (NRK): kept apart from the incident list */
 
 .news {
   margin-top: 6px;

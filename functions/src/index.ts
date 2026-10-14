@@ -3,7 +3,6 @@ import { onSchedule } from "firebase-functions/scheduler";
 import { runPublishJob } from "./feeds";
 import {
   closeExpiredEvents,
-  runHrsJob,
   runMetAlertsJob,
   runNodvarselJob,
   runNrkJob,
@@ -18,7 +17,7 @@ import { VEGVESEN_ATTRIBUTION } from "./sources/vegvesen";
 import { METALERTS_ATTRIBUTION } from "./sources/metalerts";
 import { NVE_ATTRIBUTION } from "./sources/nve";
 import { NODVARSEL_ATTRIBUTION } from "./sources/nodvarsel";
-import { HRS_ATTRIBUTION, NRK_ATTRIBUTION } from "./sources/news";
+import { NRK_ATTRIBUTION } from "./sources/news";
 
 // Cloud Scheduler is not available in europe-north1 (nor europe-north2), and Norway has no
 // Google Cloud region, so the functions run in europe-west1; Firestore (the data) lives in
@@ -58,11 +57,8 @@ export const ingestNodvarsel = onSchedule(every(2, 60), () =>
   runIngest("nodvarsel", NODVARSEL_ATTRIBUTION, () => runNodvarselJob()),
 );
 
-// News headlines: 12 NRK district feeds + Hovedredningssentralen.
-export const ingestNews = onSchedule(every(15, 120), async () => {
-  await runIngest("nrk", NRK_ATTRIBUTION, () => runNrkJob());
-  await runIngest("hrs", HRS_ATTRIBUTION, () => runHrsJob());
-});
+// News headlines: 12 NRK district feeds.
+export const ingestNews = onSchedule(every(15, 120), () => runIngest("nrk", NRK_ATTRIBUTION, () => runNrkJob()));
 
 export const closeExpired = onSchedule(every(30, 120), async () => {
   const closed = await closeExpiredEvents();

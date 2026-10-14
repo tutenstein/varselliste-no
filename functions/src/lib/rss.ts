@@ -1,4 +1,4 @@
-/** Minimal RSS 2.0 reader for the simple feeds we use (NRK, HRS, nodvarsel.no). */
+/** Minimal RSS 2.0 reader for the simple feeds we use (NRK, nodvarsel.no). */
 export interface RssItem {
   title: string;
   link: string | null;

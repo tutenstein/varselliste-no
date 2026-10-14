@@ -15,7 +15,7 @@ import { isVegvesenIncident } from "./sources/vegvesen";
  */
 export const FEEDS = "feeds";
 export const FEED_DAYS = 30;
-/** News links (NRK, HRS) are only kept for a week: the block shows recent headlines. */
+/** News links (NRK) are only kept for a week: the block shows recent headlines. */
 export const NEWS_DAYS = 7;
 const HOUR = 3600_000;
 const DAY = 24 * HOUR;
