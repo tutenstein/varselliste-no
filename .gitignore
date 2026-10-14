@@ -1,0 +1,21 @@
+node_modules/
+functions/lib/
+.firebase/
+*.log
+.DS_Store
+
+# Local secrets – never commit
+.env.local
+*.local
+.secret.local
+.runtimeconfig.json
+service-account*.json
+*-sa.json
+*firebase-adminsdk*.json
+
+# Web build output
+web/dist/
+web/.astro/
+
+# Local Claude Code session config
+.claude/
