@@ -1,0 +1,23 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "events",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "endTime", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    { "collectionGroup": "raw_events", "fieldPath": "payload", "indexes": [] },
+    { "collectionGroup": "events", "fieldPath": "summary", "indexes": [] },
+    { "collectionGroup": "events", "fieldPath": "latest", "indexes": [] },
+    { "collectionGroup": "events", "fieldPath": "title", "indexes": [] },
+    { "collectionGroup": "events", "fieldPath": "en", "indexes": [] },
+    { "collectionGroup": "feeds", "fieldPath": "data", "indexes": [] },
+    { "collectionGroup": "feeds", "fieldPath": "sources", "indexes": [] },
+    { "collectionGroup": "ingest_state", "fieldPath": "hashes", "indexes": [] },
+    { "collectionGroup": "ingest_state", "fieldPath": "activeIds", "indexes": [] }
+  ]
+}

@@ -1,0 +1,168 @@
+[
+ {
+  "EventId": "148519",
+  "Id": "584904",
+  "MasterId": "584904",
+  "Version": 1,
+  "LangKey": 2,
+  "CapStatus": "actual",
+  "MetId": null,
+  "MetName": null,
+  "CountyList": [
+   {
+    "Id": "46",
+    "Name": "Vestland",
+    "MunicipalityList": null,
+    "HighestActivityLevel": null
+   },
+   {
+    "Id": "11",
+    "Name": "Rogaland",
+    "MunicipalityList": null,
+    "HighestActivityLevel": null
+   }
+  ],
+  "MunicipalityList": [
+   {
+    "Id": "4601",
+    "Name": "Bergen",
+    "WarningList": null
+   },
+   {
+    "Id": "4627",
+    "Name": "Askøy",
+    "WarningList": null
+   },
+   {
+    "Id": "4650",
+    "Name": "Gloppen",
+    "WarningList": null
+   },
+   {
+    "Id": "4645",
+    "Name": "Askvoll",
+    "WarningList": null
+   },
+   {
+    "Id": "4602",
+    "Name": "Kinn",
+    "WarningList": null
+   }
+  ],
+  "MunicipalityCsvString": "4601;4627;4650;4645;4602;4632;4638;4617;4615;4624;4616;1135;4647;4611;1160;4637;4640;4646;4634;4628;4626;4623;4625;4631;4621;4614;4629;4639;4635;4630;4649;4636;4612;4622;4618;4648;",
+  "MunicipalityCsvStringBefore2024": null,
+  "MunicipalityCsvStringBefore2020": null,
+  "ActivityLevel": "2",
+  "ActivityLevelName": null,
+  "DangerType": "1",
+  "DangerTypeName": "Flood",
+  "ValidFrom": "2026-10-14T07:00:00",
+  "ValidTo": "2026-10-15T06:59:00",
+  "NextWarningTime": "2026-10-14T15:30:00",
+  "PublishTime": "2026-10-14T10:06:15.2203188",
+  "FirstPublishTime": "2026-10-14T10:06:15.2203188",
+  "CreatedTime": "2026-10-13T11:05:00.5845472",
+  "DangerIncreaseDateTime": "2026-10-15T00:00:00",
+  "DangerDecreaseDateTime": "2026-10-15T23:00:00",
+  "MainText": "Flood warning yellow level for midtre/ytre deler av Vestland fylke",
+  "WarningText": "The water discharge is expected to increase rapidly in small and medium sized rivers is expected.",
+  "AdviceText": "Cleaning of drainage paths and culverts is recommended.  Secure and/or move assets away from vulnerable areas (car, caravan along rivers/streams, basements).",
+  "ConsequenceText": "Local flooding and/or erosional damage in streams and small rivers.  Stormwater in urban areas.",
+  "LevelMeaningText": null,
+  "CauseText": null,
+  "Area": "midtre/ytre deler av Vestland fylke",
+  "ExposedHeightType": 0,
+  "ExposedHeightValue": -1,
+  "ExposedHeightValue2": -1,
+  "ExposedClimateType": 0,
+  "CauseList": [
+   {
+    "Id": 1,
+    "Name": "Rain"
+   }
+  ]
+ },
+ {
+  "EventId": "148519",
+  "Id": "584905",
+  "MasterId": "584905",
+  "Version": 1,
+  "LangKey": 2,
+  "CapStatus": "actual",
+  "MetId": null,
+  "MetName": null,
+  "CountyList": [
+   {
+    "Id": "46",
+    "Name": "Vestland",
+    "MunicipalityList": null,
+    "HighestActivityLevel": null
+   },
+   {
+    "Id": "11",
+    "Name": "Rogaland",
+    "MunicipalityList": null,
+    "HighestActivityLevel": null
+   }
+  ],
+  "MunicipalityList": [
+   {
+    "Id": "4601",
+    "Name": "Bergen",
+    "WarningList": null
+   },
+   {
+    "Id": "4627",
+    "Name": "Askøy",
+    "WarningList": null
+   },
+   {
+    "Id": "4650",
+    "Name": "Gloppen",
+    "WarningList": null
+   },
+   {
+    "Id": "4645",
+    "Name": "Askvoll",
+    "WarningList": null
+   },
+   {
+    "Id": "4602",
+    "Name": "Kinn",
+    "WarningList": null
+   }
+  ],
+  "MunicipalityCsvString": "4601;4627;4650;4645;4602;4632;4638;4617;4615;4624;4616;1135;4647;4611;1160;4637;4640;4646;4634;4628;4626;4623;4625;4631;4621;4614;4629;4639;4635;4630;4649;4636;4612;4622;4618;4648;",
+  "MunicipalityCsvStringBefore2024": null,
+  "MunicipalityCsvStringBefore2020": null,
+  "ActivityLevel": "2",
+  "ActivityLevelName": null,
+  "DangerType": "1",
+  "DangerTypeName": "Flood",
+  "ValidFrom": "2026-10-15T07:00:00",
+  "ValidTo": "2026-10-16T06:59:00",
+  "NextWarningTime": "2026-10-14T15:30:00",
+  "PublishTime": "2026-10-14T10:06:15.2203188",
+  "FirstPublishTime": "2026-10-14T10:06:15.2203188",
+  "CreatedTime": "2026-10-13T11:06:23.5227409",
+  "DangerIncreaseDateTime": "2026-10-15T00:00:00",
+  "DangerDecreaseDateTime": "2026-10-15T23:00:00",
+  "MainText": "Flood warning yellow level for midtre/ytre deler av Vestland fylke",
+  "WarningText": "The water discharge is expected to increase rapidly in small and medium sized rivers is expected.",
+  "AdviceText": "Cleaning of drainage paths and culverts is recommended.  Secure and/or move assets away from vulnerable areas (car, caravan along rivers/streams, basements).",
+  "ConsequenceText": "Local flooding and/or erosional damage in streams and small rivers.  Stormwater in urban areas.",
+  "LevelMeaningText": null,
+  "CauseText": null,
+  "Area": "midtre/ytre deler av Vestland fylke og nord i Rogaland",
+  "ExposedHeightType": 0,
+  "ExposedHeightValue": -1,
+  "ExposedHeightValue2": -1,
+  "ExposedClimateType": 0,
+  "CauseList": [
+   {
+    "Id": 1,
+    "Name": "Rain"
+   }
+  ]
+ }
+]

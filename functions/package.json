@@ -1,0 +1,28 @@
+{
+  "name": "varsellisten-functions",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cloud Functions: ingest of Norwegian public incident and warning data (Politiloggen, Statens vegvesen, MET, NVE, Nødvarsel, NRK, HRS).",
+  "main": "lib/index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "dry-run": "npm run build && node --env-file=.env lib/cli/dryRun.js",
+    "regions": "node scripts/build-regions.mjs",
+    "serve": "npm run build && firebase emulators:start --only functions,firestore",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "firebase-admin": "^14.5.0",
+    "firebase-functions": "^7.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^6.0.3",
+    "vitest": "^3.2.4"
+  }
+}

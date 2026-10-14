@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>RSS Tidligere Nødvarsler</title>
+    <link>https://www.nodvarsel.no/rss/rss-tidligere-nodvarsler/</link>
+    <description />
+    <language>no</language>
+    <lastBuildDate>Fri, 02 Oct 2026 20:31:02 Z</lastBuildDate>
+    <a10:id>https://www.nodvarsel.no/rss/rss-tidligere-nodvarsler/</a10:id>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/akutt-fare-over/</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/akutt-fare-over/</link>
+      <title>AKUTT FARE OVER</title>
+      <description>AKUTT FARE OVER</description>
+      <a10:updated>2026-10-02T20:31:02Z</a10:updated>
+    </item>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/eksplosjonsfare3/</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/eksplosjonsfare3/</link>
+      <title>EKSPLOSJONSFARE</title>
+      <description>EKSPLOSJONSFARE</description>
+      <a10:updated>2026-10-02T19:22:24Z</a10:updated>
+    </item>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/brann-sortland/</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/brann-sortland/</link>
+      <title>Brann, Sortland</title>
+      <description>Brann, Sortland</description>
+      <a10:updated>2026-09-17T16:03:59Z</a10:updated>
+    </item>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/brann-i-objekt2/</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/brann-i-objekt2/</link>
+      <title>Brann i objekt</title>
+      <description>Brann i objekt</description>
+      <a10:updated>2026-08-31T23:09:02Z</a10:updated>
+    </item>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/brann-i-objekt/</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/brann-i-objekt/</link>
+      <title>Brann i objekt</title>
+      <description>Brann i objekt</description>
+      <a10:updated>2026-08-22T00:30:53Z</a10:updated>
+    </item>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/brann-skog--natur/</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/brann-skog--natur/</link>
+      <title>Brann Skog / Natur</title>
+      <description>Brann Skog / Natur</description>
+      <a10:updated>2026-07-17T15:14:35Z</a10:updated>
+    </item>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/nasjonal-varslingsprove2/</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/nasjonal-varslingsprove2/</link>
+      <title>Nasjonal varslingsprøve</title>
+      <description>Nasjonal varslingsprøve</description>
+      <a10:updated>2026-06-10T10:00:01Z</a10:updated>
+    </item>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/test/</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/test/</link>
+      <title>TEST</title>
+      <description>TEST</description>
+      <a10:updated>2026-06-01T10:00:00Z</a10:updated>
+    </item>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/faren-er-over---normalisering-av-samfunnet/</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/faren-er-over---normalisering-av-samfunnet/</link>
+      <title>Faren er over - normalisering av samfunnet</title>
+      <description>Faren er over - normalisering av samfunnet</description>
+      <a10:updated>2026-05-27T15:12:27Z</a10:updated>
+    </item>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/brann--i-industri-bygg-.-dirdal</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/brann--i-industri-bygg-.-dirdal</link>
+      <title>Brann – i industri bygg . Dirdal</title>
+      <description>Brann – i industri bygg . Dirdal</description>
+      <a10:updated>2026-05-27T08:40:17Z</a10:updated>
+    </item>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/faren-over2/</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/faren-over2/</link>
+      <title>FAREN OVER</title>
+      <description>FAREN OVER</description>
+      <a10:updated>2026-05-02T22:05:07Z</a10:updated>
+    </item>
+    <item>
+      <guid isPermaLink="true">https://www.nodvarsel.no/tidligere-varsler/brann2/</guid>
+      <link>https://www.nodvarsel.no/tidligere-varsler/brann2/</link>
+      <title>Brann</title>
+      <description>Brann</description>
+      <a10:updated>2026-05-02T20:02:02Z</a10:updated>
+    </item>
+  </channel>
+</rss>

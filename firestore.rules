@@ -1,0 +1,27 @@
+rules_version = '2';
+
+// Only Cloud Functions (Admin SDK, bypasses rules) write data.
+// Clients may read the public collections; everything else is closed.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // `events` is not readable by clients: the site reads the precomputed feeds below,
+    // so nobody can run large (billed) queries against the full event store.
+
+    // Public source status ("last observed" per source, coverage page).
+    match /sources/{sourceId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Precomputed feeds the website reads (live / week / month).
+    match /feeds/{feedId} {
+      allow get: if true;
+      allow list, write: if false;
+    }
+
+    // ingest_state, raw_events and anything else: no client access.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

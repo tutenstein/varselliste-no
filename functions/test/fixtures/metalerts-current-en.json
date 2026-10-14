@@ -1,0 +1,94 @@
+{
+ "features": [
+  {
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": []
+   },
+   "properties": {
+    "altitude_above_sea_level": 0,
+    "area": "Parts of Vestland county",
+    "awarenessResponse": "Be aware",
+    "awarenessSeriousness": "Challenging situation",
+    "awareness_level": "2; yellow; Moderate",
+    "awareness_type": "10; rain",
+    "ceiling_above_sea_level": 2743,
+    "certainty": "Likely",
+    "consequences": "Flooding may occur: There may be flooding in urban areas. Difficult driving conditions: There may be difficult driving conditions in some places due to flooding and risk of hydroplaning. Roads may be closed and there could be water on the road, especially near streams and rivers. Some trips may experience longer travel times. Flooding and landslides: NVE issue flood and landslide warnings. ",
+    "contact": "https://www.met.no/en/contact-us",
+    "county": [
+     "46",
+     "15"
+    ],
+    "description": "A lot of rain is expected, locally around 60-80 mm in 12 hours. The precipitation increases first in northern parts and decreases last in southern parts.",
+    "event": "rain",
+    "eventAwarenessName": "Heavy rain",
+    "eventEndingTime": "2026-10-15T15:00:00+00:00",
+    "geographicDomain": "land",
+    "id": "2.49.0.1.578.0.20261013080350.089",
+    "instruction": "Flooding may occur: Consider clearing drains and gutters so water can flow away. Difficult driving conditions: Check road conditions at vegvesen.no/trafikk. Adjust your speed and drive according to the conditions. Flooding and landslides: Check warnings at Varsom.no. ",
+    "municipality": [
+     "1511",
+     "4601",
+     "4602",
+     "4611",
+     "4616",
+     "4617",
+     "4618",
+     "4621",
+     "4622",
+     "4623",
+     "4624",
+     "4626",
+     "4627",
+     "4628",
+     "4629",
+     "4630",
+     "4631",
+     "4632",
+     "4634",
+     "4635",
+     "4636",
+     "4637",
+     "4638",
+     "4639",
+     "4645",
+     "4646",
+     "4647",
+     "4648",
+     "4649",
+     "4650"
+    ],
+    "resources": [
+     {
+      "description": "CAP file",
+      "mimeType": "application/xml",
+      "uri": "https://api.met.no/weatherapi/metalerts/2.0/current?cap=2.49.0.1.578.0.20261013080350.089"
+     },
+     {
+      "description": "Map over Heavy rain, yellow level, Parts of Vestland county, 2026-10-15T00:00:00+00:00, 2026-10-15T15:00:00+00:00",
+      "mimeType": "image/png",
+      "uri": "https://slaps.met.no/cap-images/7174f795-9953-44f0-be01-c1b31b40c0fa.png"
+     }
+    ],
+    "riskMatrixColor": "Yellow",
+    "severity": "Moderate",
+    "status": "Actual",
+    "title": "Heavy rain, yellow level, Parts of Vestland county, 2026-10-15T00:00:00+00:00, 2026-10-15T15:00:00+00:00",
+    "triggerLevel": "60mm/12h",
+    "type": "Alert",
+    "web": "https://www.met.no/vaer-og-klima/ekstremvaervarsler-og-andre-farevarsler/vaerfenomener-som-kan-gi-farevarsel-fra-met/farevarsel-for-nedbor"
+   },
+   "type": "Feature",
+   "when": {
+    "interval": [
+     "2026-10-15T00:00:00+00:00",
+     "2026-10-15T15:00:00+00:00"
+    ]
+   }
+  }
+ ],
+ "lang": "en",
+ "lastChange": "2026-10-14T08:58:27+00:00",
+ "type": "FeatureCollection"
+}

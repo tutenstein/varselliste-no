@@ -1,0 +1,123 @@
+{
+  "_note": "Structure as returned by api.politiloggen.politiet.no/messagethreads (2026-10-14). Message texts are made up: real police messages may contain personal details and are not committed.",
+  "messageThreads": [
+    {
+      "id": "26z04h",
+      "district": "Vest Politidistrikt",
+      "districtId": 207,
+      "category": "Brann",
+      "municipality": "Sogndal",
+      "area": "Kaupanger",
+      "createdOn": "2026-10-14T07:59:38.093617+00:00",
+      "updatedOn": "2026-10-14T08:24:10.0021233+00:00",
+      "lastMessageOn": "2026-10-14T08:24:10.0021233+00:00",
+      "isActive": true,
+      "messages": [
+        { "id": "26z04h-1", "text": "Nødetatene er på stedet. Ingen fare for spredning.", "createdOn": "2026-10-14T08:13:04.8894055+00:00", "updatedOn": "2026-10-14T08:13:04.8894055+00:00", "hasImage": false, "previouslyIncludedImage": false, "type": "Published" },
+        { "id": "26z04h-0", "text": "Melding om brann i en stolpetrafo.", "createdOn": "2026-10-14T07:59:38.0934166+00:00", "updatedOn": "2026-10-14T07:59:38.1372734+00:00", "hasImage": false, "previouslyIncludedImage": false, "type": "Published" }
+      ]
+    },
+    {
+      "id": "26z0aa",
+      "district": "Øst Politidistrikt",
+      "districtId": 202,
+      "category": "Trafikk",
+      "municipality": "Våler",
+      "area": "Svinndal",
+      "createdOn": "2026-10-14T06:10:00.000+00:00",
+      "updatedOn": "2026-10-14T06:40:00.000+00:00",
+      "lastMessageOn": "2026-10-14T06:40:00.000+00:00",
+      "isActive": false,
+      "messages": [
+        { "id": "26z0aa-0", "text": "Trafikkulykke med to biler involvert. Nødetatene rykker ut.", "createdOn": "2026-10-14T06:10:00.000+00:00", "type": "Published" },
+        { "id": "26z0aa-1", "text": "Bilberger er på stedet. Vi avslutter her.", "createdOn": "2026-10-14T06:40:00.000+00:00", "type": "Edited" }
+      ]
+    },
+    {
+      "id": "26z0bb",
+      "district": "Innlandet Politidistrikt",
+      "districtId": 203,
+      "category": "Trafikk",
+      "municipality": "Våler",
+      "area": null,
+      "createdOn": "2026-10-14T05:00:00.000+00:00",
+      "lastMessageOn": "2026-10-14T05:00:00.000+00:00",
+      "isActive": false,
+      "messages": [
+        { "id": "26z0bb-0", "text": "Trafikkontroll gjennomført. Tre forenklede forelegg for hastighet.", "createdOn": "2026-10-14T05:00:00.000+00:00", "type": "Published" }
+      ]
+    },
+    {
+      "id": "26z0cc",
+      "district": "Møre og Romsdal Politidistrikt",
+      "districtId": 208,
+      "category": "Trafikk",
+      "municipality": "Herøy",
+      "area": "Fosnavåg",
+      "createdOn": "2026-10-14T04:00:00.000+00:00",
+      "lastMessageOn": "2026-10-14T04:30:00.000+00:00",
+      "isActive": true,
+      "messages": [
+        { "id": "26z0cc-0", "text": "Vogntog står fast i bakken. Veien er stengt i begge retninger.", "createdOn": "2026-10-14T04:00:00.000+00:00", "type": "Published" }
+      ]
+    },
+    {
+      "id": "26z0dd",
+      "district": "Oslo Politidistrikt",
+      "districtId": 201,
+      "category": "Ro og orden",
+      "municipality": "Oslo",
+      "area": "Sentrum",
+      "createdOn": "2026-10-14T03:00:00.000+00:00",
+      "lastMessageOn": "2026-10-14T03:00:00.000+00:00",
+      "isActive": false,
+      "messages": [
+        { "id": "26z0dd-0", "text": "Melding om bråk utenfor et utested. Patrulje sendt.", "createdOn": "2026-10-14T03:00:00.000+00:00", "type": "Published" }
+      ]
+    },
+    {
+      "id": "26z0ee",
+      "district": "Vest Politidistrikt",
+      "districtId": 207,
+      "category": "Andre hendelser",
+      "municipality": "Kvam Herad",
+      "area": null,
+      "createdOn": "2026-10-14T02:00:00.000+00:00",
+      "lastMessageOn": "2026-10-14T02:00:00.000+00:00",
+      "isActive": false,
+      "messages": [
+        { "id": "26z0ee-0", "text": "Vi har fått melding om løse dyr.", "createdOn": "2026-10-14T02:00:00.000+00:00", "type": "Published" }
+      ]
+    },
+    {
+      "id": "26z0ff",
+      "district": "Sør-Øst Politidistrikt",
+      "districtId": 204,
+      "category": "Savnet",
+      "municipality": "Sør-Øst politidistrikt",
+      "area": null,
+      "createdOn": "2026-10-14T01:00:00.000+00:00",
+      "lastMessageOn": "2026-10-14T01:00:00.000+00:00",
+      "isActive": true,
+      "messages": [
+        { "id": "26z0ff-0", "text": "Leteaksjon pågår.", "createdOn": "2026-10-14T01:00:00.000+00:00", "type": "Published" }
+      ]
+    },
+    {
+      "id": "26z0gg",
+      "district": "Agder Politidistrikt",
+      "districtId": 205,
+      "category": "Voldshendelse",
+      "municipality": "Kristiansand",
+      "area": null,
+      "createdOn": "2026-10-13T23:00:00.000+00:00",
+      "lastMessageOn": "2026-10-13T23:10:00.000+00:00",
+      "isActive": false,
+      "messages": [
+        { "id": "26z0gg-0", "text": "Teksten er fjernet.", "createdOn": "2026-10-13T23:00:00.000+00:00", "type": "Removed" },
+        { "id": "26z0gg-1", "text": "Teksten er fjernet.", "createdOn": "2026-10-13T23:10:00.000+00:00", "type": "Removed" }
+      ]
+    }
+  ],
+  "hasMoreResults": true
+}

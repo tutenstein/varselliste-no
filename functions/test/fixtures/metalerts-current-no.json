@@ -1,0 +1,94 @@
+{
+ "features": [
+  {
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": []
+   },
+   "properties": {
+    "altitude_above_sea_level": 0,
+    "area": "Deler av Vestland fylke",
+    "awarenessResponse": "Følg med",
+    "awarenessSeriousness": "Utfordrende situasjon",
+    "awareness_level": "2; yellow; Moderate",
+    "awareness_type": "10; rain",
+    "ceiling_above_sea_level": 2743,
+    "certainty": "Likely",
+    "consequences": "Overvann kan forekomme: Det kan bli overvann i tettbygde områder. Vanskelige kjøreforhold: Det kan bli vanskelige kjøreforhold noen steder på grunn av overvann og fare for vannplaning. Veier kan bli stengt og det kan være vann i veibanen, særlig ved bekke- og elveløp. Noen reiser kan få lengre reisetid. Flom og skred: NVE sender ut egne flom og skredvarsler. ",
+    "contact": "https://www.met.no/kontakt-oss",
+    "county": [
+     "46",
+     "15"
+    ],
+    "description": "Det ventes mye regn, lokalt 60-80 mm/12t. Nedbøren øker først i nord og minker sist i sør.",
+    "event": "rain",
+    "eventAwarenessName": "Mye regn",
+    "eventEndingTime": "2026-10-15T15:00:00+00:00",
+    "geographicDomain": "land",
+    "id": "2.49.0.1.578.0.20261013080350.089",
+    "instruction": "Overvann kan forekomme: Vurder å rense stikkrenner og avløp slik at vannet kan renne unna. Vanskelige kjøreforhold: Sjekk veimeldingene på vegvesen.no/trafikk. Tilpass farten og kjør etter forholdene. Flom og skred: Sjekk varslene på Varsom.no. ",
+    "municipality": [
+     "1511",
+     "4601",
+     "4602",
+     "4611",
+     "4616",
+     "4617",
+     "4618",
+     "4621",
+     "4622",
+     "4623",
+     "4624",
+     "4626",
+     "4627",
+     "4628",
+     "4629",
+     "4630",
+     "4631",
+     "4632",
+     "4634",
+     "4635",
+     "4636",
+     "4637",
+     "4638",
+     "4639",
+     "4645",
+     "4646",
+     "4647",
+     "4648",
+     "4649",
+     "4650"
+    ],
+    "resources": [
+     {
+      "description": "CAP file",
+      "mimeType": "application/xml",
+      "uri": "https://api.met.no/weatherapi/metalerts/2.0/current?cap=2.49.0.1.578.0.20261013080350.089"
+     },
+     {
+      "description": "Kart over Mye regn, gult nivå, Deler av Vestland fylke, 2026-10-15T00:00:00+00:00, 2026-10-15T15:00:00+00:00",
+      "mimeType": "image/png",
+      "uri": "https://slaps.met.no/cap-images/7174f795-9953-44f0-be01-c1b31b40c0fa.png"
+     }
+    ],
+    "riskMatrixColor": "Yellow",
+    "severity": "Moderate",
+    "status": "Actual",
+    "title": "Mye regn, gult nivå, Deler av Vestland fylke, 2026-10-15T00:00:00+00:00, 2026-10-15T15:00:00+00:00",
+    "triggerLevel": "60mm/12h",
+    "type": "Alert",
+    "web": "https://www.met.no/vaer-og-klima/ekstremvaervarsler-og-andre-farevarsler/vaerfenomener-som-kan-gi-farevarsel-fra-met/farevarsel-for-nedbor"
+   },
+   "type": "Feature",
+   "when": {
+    "interval": [
+     "2026-10-15T00:00:00+00:00",
+     "2026-10-15T15:00:00+00:00"
+    ]
+   }
+  }
+ ],
+ "lang": "no",
+ "lastChange": "2026-10-14T08:56:49+00:00",
+ "type": "FeatureCollection"
+}
