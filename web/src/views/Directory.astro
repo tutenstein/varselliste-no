@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { routes, t, type Lang } from "../i18n";
+import { KOMMUNE_LIST, fylkeByCode, isAmbiguousName } from "../lib/regions";
+
+const { lang } = Astro.props as { lang: Lang };
+const tr = t(lang);
+// Norwegian alphabet: … X Y Z Æ Ø Å.
+const byLetter = new Map<string, typeof KOMMUNE_LIST>();
+for (const k of KOMMUNE_LIST) {
+  const letter = k.name[0].toUpperCase();
+  byLetter.set(letter, [...(byLetter.get(letter) ?? []), k]);
+}
+const letters = [...byLetter.keys()].sort((a, b) => a.localeCompare(b, "nb"));
+---
+
+<Layout lang={lang} title={`${tr.directoryTitle} – ${tr.siteName}`} description={tr.directoryLead}>
+  <div class="page-head">
+    <h1>{tr.directoryTitle}</h1>
+    <p class="lead">{tr.directoryLead}</p>
+  </div>
+  <nav class="crumbs letter-nav" aria-label={tr.letters}>
+    {letters.map((l) => <a href={`#${l}`}>{l}</a>)}
+  </nav>
+  <div class="letters">
+    {
+      letters.map((letter) => (
+        <section class="letter" id={letter}>
+          <h2>{letter}</h2>
+          <ul class="letter-list">
+            {byLetter.get(letter)!.map((k) => (
+              <li>
+                <a href={routes.kommune(lang, k.slug)}>{k.name}</a>
+                {isAmbiguousName(k.name) && <span class="muted"> ({fylkeByCode.get(k.fylke)?.name})</span>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</Layout>

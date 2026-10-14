@@ -1,0 +1,142 @@
+---
+import "../styles/global.css";
+import { alternatePath, routes, t, type Lang } from "../i18n";
+import { feedUrl } from "../lib/feed";
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Start fetching the live feed before the island hydrates. */
+  prefetchFeed?: boolean;
+}
+
+const { lang, title, description, prefetchFeed = false } = Astro.props;
+const tr = t(lang);
+const nb = lang === "nb";
+const path = Astro.url.pathname;
+const other: Lang = nb ? "en" : "nb";
+const nbPath = nb ? path : alternatePath(path, "nb");
+const enPath = nb ? alternatePath(path, "en") : path;
+const site = Astro.site!;
+const canonical = new URL(path, site).toString();
+const navItems = [
+  { href: routes.home(lang), label: tr.nav.events },
+  { href: routes.directory(lang), label: tr.nav.directory },
+  { href: routes.about(lang), label: tr.nav.about },
+];
+const isCurrent = (href: string) => (href === routes.home(lang) ? path === href : path.startsWith(href));
+const emergency = [
+  { n: "110", label: nb ? "Brann" : "Fire" },
+  { n: "112", label: nb ? "Politi" : "Police" },
+  { n: "113", label: nb ? "Ambulanse" : "Ambulance" },
+];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="nb" href={new URL(nbPath, site).toString()} />
+    <link rel="alternate" hreflang="en" href={new URL(enPath, site).toString()} />
+    <link rel="alternate" hreflang="x-default" href={new URL(nbPath, site).toString()} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={tr.siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={nb ? "nb_NO" : "en_GB"} />
+    <meta name="theme-color" content="#f3f5f8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0f16" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {
+      prefetchFeed && (
+        <>
+          <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin />
+          <script is:inline define:vars={{ url: feedUrl("live") }}>
+            window.__vlLive = fetch(url, { cache: "no-store" }).then((r) => (r.ok ? r.json() : Promise.reject(r.status)));
+            window.__vlLive.catch(() => {});
+          </script>
+        </>
+      )
+    }
+  </head>
+  <body>
+    <a class="skip" href="#main">{tr.skip}</a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href={routes.home(lang)} aria-label={tr.siteName}>
+          <svg class="brand-mark" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+            <rect width="32" height="32" rx="9" fill="var(--brand)"></rect>
+            <path d="M5.5 23.5 12 12.5l3.6 6 2.2-3.2 5.7 8.2" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle cx="22.5" cy="8.5" r="2.2" fill="#fff"></circle>
+          </svg>
+          <span class="brand-name">{tr.siteName}</span>
+        </a>
+        <nav class="nav" aria-label={tr.mainMenu}>
+          {
+            navItems.map((n) => (
+              <a href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>
+                {n.label}
+              </a>
+            ))
+          }
+        </nav>
+        <div class="header-actions">
+          <div class="emergency" role="group" aria-label={tr.emergencyShort}>
+            {
+              emergency.map((e) => (
+                <a class="call" href={`tel:${e.n}`} title={`${e.label}: ${e.n}`} aria-label={`${e.label}: ${e.n}`}>
+                  {e.n}
+                </a>
+              ))
+            }
+          </div>
+          <a class="lang-switch" href={other === "en" ? enPath : nbPath} hreflang={other} lang={other}>
+            {other === "en" ? "EN" : "NO"}
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="wrap">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <div>
+          <p class="footer-brand">{tr.siteName}</p>
+          <p class="muted">{tr.notOfficial}</p>
+          <p class="footer-112"><strong>{tr.emergency}</strong></p>
+        </div>
+        <div>
+          <p class="muted small">
+            {
+              nb
+                ? "Data fra Politiet (Politiloggen), Statens vegvesen, Meteorologisk institutt, NVE/Varsom, nodvarsel.no (DSB), NRK og Hovedredningssentralen. Statistikk fra SSB."
+                : "Data from the Norwegian Police (Politiloggen), the Norwegian Public Roads Administration, MET Norway, NVE/Varsom, nodvarsel.no (DSB), NRK and the Joint Rescue Coordination Centre. Statistics from Statistics Norway (SSB)."
+            }
+          </p>
+          <p class="muted small">
+            {nb ? "Inneholder data under " : "Contains data under the "}
+            <a href="https://data.norge.no/nlod/no/2.0" rel="license noopener">{nb ? "norsk lisens for offentlige data (NLOD)" : "Norwegian licence for Open Government data (NLOD)"}</a>
+            {nb ? " distribuert av Politiet og Statens vegvesen. Data fra MET Norway og SSB under " : " distributed by the Norwegian Police and the Norwegian Public Roads Administration. Data from MET Norway and Statistics Norway under "}
+            <a href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener">CC BY 4.0</a>.
+            {nb ? " Kart" : " Map"} © OpenFreeMap, OpenMapTiles, OpenStreetMap.
+          </p>
+          <p class="small">
+            <a href={routes.about(lang)}>{tr.nav.about}</a> ·
+            <a href={nbPath} hreflang="nb" lang="nb">Norsk (bokmål)</a> ·
+            <a href={enPath} hreflang="en" lang="en">English</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

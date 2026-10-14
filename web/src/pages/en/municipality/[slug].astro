@@ -1,0 +1,12 @@
+---
+import KommunePage from "../../../views/KommunePage.astro";
+import { KOMMUNE_LIST, type Kommune } from "../../../lib/regions";
+
+export function getStaticPaths() {
+  return KOMMUNE_LIST.map((kommune) => ({ params: { slug: kommune.slug }, props: { kommune } }));
+}
+
+const { kommune } = Astro.props as { kommune: Kommune };
+---
+
+<KommunePage lang="en" kommune={kommune} />

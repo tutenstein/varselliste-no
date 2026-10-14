@@ -1,0 +1,200 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SourceStatus from "../components/SourceStatus";
+import { t, type Lang } from "../i18n";
+import { CONTACT_EMAIL } from "../config";
+
+const { lang } = Astro.props as { lang: Lang };
+const tr = t(lang);
+const nb = lang === "nb";
+
+const sources = [
+  {
+    name: nb ? "Politiet – Politiloggen" : "Norwegian Police – Politiloggen",
+    url: "https://api.politiloggen.politiet.no/index.html",
+    data: nb
+      ? "Politiets operative meldinger: trafikk, ulykker, brann, redning, savnede, kriminalitet og ro og orden – det samme som vises på politiet.no."
+      : "The police operation centres' messages: traffic, accidents, fires, rescue, missing persons, crime and public order – the same as shown on politiet.no.",
+    freq: nb ? "Hvert 3. minutt" : "Every 3 minutes",
+    loc: nb ? "Kommune og sted, slik politiet oppgir det (vist ved kommunens midtpunkt)" : "Municipality and place as given by the police (shown at the municipality's centre)",
+    license: "NLOD 2.0",
+  },
+  {
+    name: nb ? "Statens vegvesen – trafikkmeldinger (DATEX II)" : "Norwegian Public Roads Administration – traffic messages (DATEX II)",
+    url: "https://www.vegvesen.no/om-oss/om-organisasjonen/apne-data/et-utvalg-apne-data/ogc-karttjenester/kartlag/",
+    data: nb
+      ? "Ulykker, stansede kjøretøy, dyr og gjenstander i vegbanen, ras, flom, skader på vegen og innstilte ferjer. Planlagt vegarbeid og trafikkregulering vises ikke i listen."
+      : "Accidents, stopped vehicles, animals and objects on the road, landslides, flooding, road damage and cancelled ferries. Planned roadworks and traffic management are not listed.",
+    freq: nb ? "Annethvert minutt" : "Every 2 minutes",
+    loc: nb ? "Nøyaktig posisjon og vegnummer" : "Exact position and road number",
+    license: "NLOD",
+  },
+  {
+    name: nb ? "Meteorologisk institutt – farevarsler (MetAlerts)" : "MET Norway – weather warnings (MetAlerts)",
+    url: "https://api.met.no/weatherapi/metalerts/2.0/documentation",
+    data: nb ? "Gule, oransje og røde farevarsler for vær på land." : "Yellow, orange and red weather warnings on land.",
+    freq: nb ? "Hvert 10. minutt" : "Every 10 minutes",
+    loc: nb ? "Kommuner og fylker i varselområdet" : "Municipalities and counties in the warning area",
+    license: "CC BY 4.0",
+  },
+  {
+    name: nb ? "NVE / Varsom – flom og jordskred" : "NVE / Varsom – floods and landslides",
+    url: "https://api.nve.no/doc/",
+    data: nb ? "Varsler fra Flomvarslingen og Jordskredvarslingen i Norge og www.varsom.no." : "Warnings from the Norwegian flood and landslide forecasting services and www.varsom.no.",
+    freq: nb ? "Hvert 30. minutt" : "Every 30 minutes",
+    loc: nb ? "Kommuner og fylker" : "Municipalities and counties",
+    license: "NLOD",
+  },
+  {
+    name: nb ? "Nødvarsel (DSB)" : "Emergency alerts – Nødvarsel (DSB)",
+    url: "https://www.nodvarsel.no/",
+    data: nb
+      ? "Nødvarsler sendt til mobiltelefoner i et område. Hentet fra nodvarsel.no – les alltid selve varselet der."
+      : "Emergency alerts sent to mobile phones in an area. Taken from nodvarsel.no – always read the alert itself there.",
+    freq: nb ? "Annethvert minutt" : "Every 2 minutes",
+    loc: nb ? "Kommune når varselets tittel nevner den" : "Municipality when the alert title names one",
+    license: nb ? "Fri bruk med kildehenvisning og lenke til nodvarsel.no" : "Free to use with attribution and a link to nodvarsel.no",
+  },
+  {
+    name: nb ? "NRK og Hovedredningssentralen – nyheter" : "NRK and the Joint Rescue Coordination Centre – news",
+    url: "https://www.nrk.no/rss/",
+    data: nb
+      ? "Overskrifter om hendelser, uendret og med lenke til saken. Vises adskilt fra hendelseslisten."
+      : "Headlines about incidents, unchanged and linked to the story. Shown apart from the incident list.",
+    freq: nb ? "Hvert 15. minutt" : "Every 15 minutes",
+    loc: nb ? "Fylke (NRK-distrikt), kommune når den nevnes" : "County (NRK district), municipality when named",
+    license: nb ? "RSS: overskrift og lenke" : "RSS: headline and link",
+  },
+  {
+    name: nb ? "SSB – statistikk" : "Statistics Norway (SSB) – statistics",
+    url: "https://www.ssb.no/statbank/table/12058/",
+    data: nb ? "Brann- og redningsvesenets utrykninger, bygningsbranner og boligbranner per kommune og år, samt folketall." : "Fire and rescue call-outs, building fires and residential fires per municipality and year, and population.",
+    freq: nb ? "Årlig (sjekkes daglig)" : "Yearly (checked daily)",
+    loc: nb ? "Kommune" : "Municipality",
+    license: "CC BY 4.0",
+  },
+];
+---
+
+<Layout lang={lang} title={`${tr.aboutTitle} – ${tr.siteName}`} description={tr.notOfficial}>
+  <div class="page-head">
+    <h1>{tr.aboutTitle}</h1>
+    <p class="lead">{tr.tagline}.</p>
+  </div>
+
+  <div class="prose">
+    <p>
+      {
+        nb
+          ? "Varsellisten samler ulykker, branner, redningsaksjoner, trafikkhendelser og farevarsler fra åpne offentlige kilder på ett sted – sortert etter tid og sted, med kart og filter for fylke, kommune og avstand."
+          : "Varsellisten brings together accidents, fires, rescue operations, traffic incidents and warnings from open government sources in one place – sorted by time and place, with a map and filters for county, municipality and distance."
+      }
+    </p>
+    <p>
+      <strong>{tr.notOfficial}</strong>
+      {
+        nb
+          ? " Opplysningene kan være forsinket, ufullstendige eller endres i ettertid. Sjekk alltid kilden, og ikke ta sikkerhetsbeslutninger ut fra denne siden."
+          : " Information may be delayed, incomplete or change afterwards. Always check the original source and don't base safety decisions on this site."
+      }
+      <strong> {tr.emergency}.</strong>
+    </p>
+
+    <h2>{tr.sourceStatusTitle}</h2>
+    <SourceStatus client:load lang={lang} />
+
+    <h2>{tr.sourcesTitle}</h2>
+  </div>
+  <div class="table-wrap">
+    <table class="sources">
+      <thead>
+        <tr>
+          <th>{nb ? "Kilde" : "Source"}</th>
+          <th>{nb ? "Innhold" : "Content"}</th>
+          <th>{nb ? "Oppdatering" : "Updates"}</th>
+          <th>{nb ? "Sted" : "Location"}</th>
+          <th>{nb ? "Lisens" : "Licence"}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          sources.map((s) => (
+            <tr>
+              <td>
+                <a href={s.url} rel="noopener">
+                  {s.name}
+                </a>
+              </td>
+              <td>{s.data}</td>
+              <td>{s.freq}</td>
+              <td>{s.loc}</td>
+              <td>{s.license}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prose">
+    <h2>{nb ? "Dekning og begrensninger" : "Coverage and limitations"}</h2>
+    <ul>
+      <li>
+        {
+          nb
+            ? "Det finnes ingen åpen, landsdekkende liste over brannvesenets utrykninger. Branner og redningsaksjoner vises her når politiet, Statens vegvesen eller Nødvarsel melder om dem."
+            : "There is no open, nationwide list of fire service call-outs. Fires and rescue operations appear here when the police, the Public Roads Administration or the emergency alert system report them."
+        }
+      </li>
+      <li>
+        {
+          nb
+            ? "Politiets meldinger oppgis per kommune. Vi viser dem ved kommunens midtpunkt og merker plasseringen som omtrentlig (≈)."
+            : "Police messages are given per municipality. We place them at the municipality's centre and mark the location as approximate (≈)."
+        }
+      </li>
+      <li>
+        {
+          nb
+            ? "Meldinger som politiet fjerner, fjernes også her ved neste oppdatering."
+            : "Messages the police remove are also removed here at the next update."
+        }
+      </li>
+      <li>
+        {
+          nb
+            ? "Tekstene vises på norsk slik kilden publiserer dem; Statens vegvesens meldinger oversettes ikke."
+            : "Texts are shown in Norwegian as the source publishes them; the Public Roads Administration's messages are not translated."
+        }
+      </li>
+      <li>{nb ? "Historikken går 30 dager tilbake." : "History goes back 30 days."}</li>
+    </ul>
+
+    <h2>{nb ? "Personvern" : "Privacy"}</h2>
+    <p>
+      {
+        nb
+          ? "Vi bruker ingen sporingsinformasjonskapsler. Bruker du «Nær meg», blir posisjonen din i nettleseren – den sendes aldri til oss og lagres ikke. Vi viser ingen adresser utover det kildene selv publiserer, og hver hendelse har ingen egen side som søkemotorer kan indeksere."
+          : "We use no tracking cookies. If you use “Near me”, your location stays in your browser – it is never sent to us or stored. We show no addresses beyond what the sources themselves publish, and individual incidents have no pages of their own for search engines to index."
+      }
+    </p>
+
+    <h2>{nb ? "Retting og fjerning" : "Corrections and removal"}</h2>
+    <p>
+      {
+        nb
+          ? "Mener du at en melding her inneholder opplysninger om deg som bør fjernes, eller at noe er feil, kan du kontakte oss"
+          : "If you believe a message here contains information about you that should be removed, or that something is wrong, contact us"
+      }
+      {CONTACT_EMAIL ? (
+        <>
+          {" "}
+          {nb ? "på" : "at"} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        </>
+      ) : (
+        <> ({nb ? "kontaktadresse kommer" : "contact address coming soon"}).</>
+      )}
+      {nb ? " Opplysninger fra politiet bør også meldes til politiet, slik at de rettes ved kilden." : " Information from the police should also be reported to the police so it is corrected at the source."}
+    </p>
+  </div>
+</Layout>

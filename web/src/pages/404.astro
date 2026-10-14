@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { routes, t } from "../i18n";
+
+const nb = t("nb");
+const en = t("en");
+---
+
+<Layout lang="nb" title={`${nb.notFoundTitle} – ${nb.siteName}`} description={nb.notFoundLead}>
+  <div class="page-head not-found">
+    <h1>{nb.notFoundTitle}</h1>
+    <p class="lead">{nb.notFoundLead} <a href={routes.home("nb")}>{nb.backHome}</a></p>
+    <p class="lead" lang="en">{en.notFoundLead} <a href={routes.home("en")}>{en.backHome}</a></p>
+  </div>
+</Layout>

@@ -1,0 +1,64 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LiveFeed from "../components/LiveFeed";
+import { routes, t, type Lang } from "../i18n";
+import { FYLKE_LIST } from "../lib/regions";
+
+const { lang } = Astro.props as { lang: Lang };
+const tr = t(lang);
+const nb = lang === "nb";
+---
+
+<Layout lang={lang} title={tr.homeTitle} description={tr.tagline} prefetchFeed>
+  <div class="page-head">
+    <h1>{tr.homeLead}</h1>
+    <p class="lead">{tr.tagline}</p>
+  </div>
+
+  <LiveFeed client:load lang={lang} />
+
+  <section class="section" aria-labelledby="fylke-title">
+    <h2 id="fylke-title">{tr.countiesTitle}</h2>
+    <ul class="link-grid">
+      {
+        FYLKE_LIST.map((f) => (
+          <li>
+            <a href={routes.fylke(lang, f.slug)}>{f.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="how-title">
+    <h2 id="how-title">{nb ? "Slik fungerer det" : "How it works"}</h2>
+    <div class="info-grid">
+      <div class="card">
+        <h3>{nb ? "Åpne kilder" : "Open sources"}</h3>
+        <p>
+          {
+            nb
+              ? "Hendelser hentes fra Politiloggen, Statens vegvesens trafikkmeldinger, farevarsler fra Meteorologisk institutt og Varsom, og Nødvarsel."
+              : "Incidents come from the police log (Politiloggen), the Norwegian Public Roads Administration's traffic messages, warnings from MET Norway and Varsom, and the national emergency alert system."
+          }
+        </p>
+      </div>
+      <div class="card">
+        <h3>{nb ? "Oppdateres løpende" : "Continuously updated"}</h3>
+        <p>
+          {
+            nb
+              ? "Trafikkmeldinger og nødvarsler hentes annethvert minutt, Politiloggen hvert tredje og farevarsler hvert tiende minutt."
+              : "Traffic messages and emergency alerts are fetched every two minutes, the police log every three and weather warnings every ten minutes."
+          }
+        </p>
+      </div>
+      <div class="card">
+        <h3>{nb ? "Ikke en offentlig tjeneste" : "Not an authority"}</h3>
+        <p>
+          {tr.notOfficial} <strong>{tr.emergency}.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,38 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LiveFeed from "../components/LiveFeed";
+import StatsCard from "../components/StatsCard.astro";
+import { routes, t, type Lang } from "../i18n";
+import { KOMMUNE_LIST, type Fylke } from "../lib/regions";
+
+const { lang, fylke } = Astro.props as { lang: Lang; fylke: Fylke };
+const tr = t(lang);
+const kommuner = KOMMUNE_LIST.filter((k) => k.fylke === fylke.code);
+---
+
+<Layout lang={lang} title={`${tr.fylkeTitle(fylke.name)} – ${tr.siteName}`} description={tr.fylkeLead(fylke.name)} prefetchFeed>
+  <div class="page-head">
+    <nav class="crumbs" aria-label={tr.breadcrumb}>
+      <a href={routes.home(lang)}>{tr.allNorway}</a><span aria-hidden="true">›</span><span>{fylke.name}</span>
+    </nav>
+    <h1>{tr.fylkeTitle(fylke.name)}</h1>
+    <p class="lead">{tr.fylkeLead(fylke.name)}</p>
+  </div>
+
+  <LiveFeed client:load lang={lang} fylke={fylke.code} />
+
+  <StatsCard lang={lang} name={fylke.name} codes={kommuner.map((k) => k.code)} />
+
+  <section class="section" aria-labelledby="kommuner-title">
+    <h2 id="kommuner-title">{tr.kommunerIn(fylke.name)}</h2>
+    <ul class="link-grid">
+      {
+        kommuner.map((k) => (
+          <li>
+            <a href={routes.kommune(lang, k.slug)}>{k.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Layout>

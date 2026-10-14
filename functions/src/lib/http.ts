@@ -58,7 +58,15 @@ export async function fetchText(url: string, opts: FetchOptions = {}): Promise<T
     }
     if (attempt < attempts) await sleep(2_000 * 2 ** (attempt - 1));
   }
-  throw lastError;
+  throw withCause(url, lastError);
+}
+
+/** Node's fetch reports network errors as "fetch failed"; keep the underlying code (ETIMEDOUT …). */
+function withCause(url: string, err: unknown): unknown {
+  if (!(err instanceof Error) || err instanceof HttpError) return err;
+  const cause = (err as Error & { cause?: { code?: string; message?: string } }).cause;
+  const detail = cause?.code ?? cause?.message ?? (err.name === "TimeoutError" ? "timeout" : null);
+  return detail ? new Error(`${err.message} (${detail}) for ${new URL(url).host}`) : err;
 }
 
 export async function fetchJson<T>(url: string, opts: FetchOptions = {}): Promise<T> {

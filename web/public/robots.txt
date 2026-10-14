@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://varselliste-no.web.app/sitemap-index.xml

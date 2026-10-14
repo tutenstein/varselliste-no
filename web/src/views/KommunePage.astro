@@ -1,0 +1,48 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LiveFeed from "../components/LiveFeed";
+import StatsCard from "../components/StatsCard.astro";
+import { routes, t, type Lang } from "../i18n";
+import { KOMMUNE_LIST, fylkeByCode, type Kommune } from "../lib/regions";
+
+const { lang, kommune } = Astro.props as { lang: Lang; kommune: Kommune };
+const tr = t(lang);
+const fylke = fylkeByCode.get(kommune.fylke)!;
+const neighbours = KOMMUNE_LIST.filter((k) => k.fylke === kommune.fylke && k.code !== kommune.code);
+---
+
+<Layout
+  lang={lang}
+  title={`${tr.kommuneTitle(kommune.name)} (${fylke.name}) – ${tr.siteName}`}
+  description={tr.kommuneLead(kommune.name, fylke.name)}
+  prefetchFeed
+>
+  <div class="page-head">
+    <nav class="crumbs" aria-label={tr.breadcrumb}>
+      <a href={routes.home(lang)}>{tr.allNorway}</a><span aria-hidden="true">›</span>
+      <a href={routes.fylke(lang, fylke.slug)}>{fylke.name}</a><span aria-hidden="true">›</span>
+      <span>{kommune.name}</span>
+    </nav>
+    <h1>{tr.kommuneTitle(kommune.name)}</h1>
+    <p class="lead">{tr.kommuneLead(kommune.name, fylke.name)}</p>
+  </div>
+
+  <LiveFeed client:load lang={lang} kommune={kommune.code} />
+
+  <StatsCard lang={lang} name={kommune.name} codes={[kommune.code]} />
+
+  {
+    neighbours.length > 0 && (
+      <section class="section" aria-labelledby="near-title">
+        <h2 id="near-title">{tr.kommunerIn(fylke.name)}</h2>
+        <ul class="link-grid">
+          {neighbours.map((k) => (
+            <li>
+              <a href={routes.kommune(lang, k.slug)}>{k.name}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</Layout>

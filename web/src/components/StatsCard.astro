@@ -1,0 +1,89 @@
+---
+// Static (build-time) yearly statistics from SSB, summed over the given kommuner.
+import stats from "../data/stats.json";
+import { t, type Lang } from "../i18n";
+import { number } from "../lib/format";
+
+interface Props {
+  lang: Lang;
+  name: string;
+  codes: string[];
+}
+
+type KommuneStats = {
+  pop: number | null;
+  callouts: (number | null)[];
+  buildingFires: (number | null)[];
+  homeFires: (number | null)[];
+};
+
+const { lang, name, codes } = Astro.props;
+const tr = t(lang);
+const data = stats as unknown as { years: string[]; populationYear?: string; kommuner: Record<string, KommuneStats> };
+const rows = codes.map((c) => data.kommuner[c]).filter(Boolean);
+const sum = (key: "callouts" | "buildingFires" | "homeFires") =>
+  data.years.map((_, i) => rows.reduce((acc, r) => acc + (r[key][i] ?? 0), 0));
+
+const callouts = sum("callouts");
+const fires = sum("buildingFires");
+const homeFires = sum("homeFires");
+const pop = rows.reduce((acc, r) => acc + (r.pop ?? 0), 0);
+const lastIdx = data.years.length - 1;
+const max = Math.max(...callouts, 1);
+const hasData = rows.length > 0 && data.years.length > 0 && callouts[lastIdx] > 0;
+---
+
+{
+  hasData && (
+    <section class="section card" aria-labelledby="stats-title">
+      <h2 id="stats-title" class="stats-title">
+        {tr.statsTitle(name)}
+      </h2>
+      <p class="muted stats-lead">{tr.statsLead}</p>
+      <div class="stat-row">
+        <div>
+          <div class="stat-num">{number(lang, callouts[lastIdx])}</div>
+          <div class="stat-label">
+            {tr.statsEvents} {data.years[lastIdx]}
+          </div>
+        </div>
+        {pop > 0 && (
+          <div>
+            <div class="stat-num">{number(lang, (callouts[lastIdx] / pop) * 1000, 1)}</div>
+            <div class="stat-label">{tr.statsPer1000}</div>
+          </div>
+        )}
+        <div>
+          <div class="stat-num">{number(lang, fires[lastIdx])}</div>
+          <div class="stat-label">
+            {tr.statsBuildingFires} {data.years[lastIdx]}
+          </div>
+        </div>
+        <div>
+          <div class="stat-num">{number(lang, homeFires[lastIdx])}</div>
+          <div class="stat-label">
+            {tr.statsHomeFires} {data.years[lastIdx]}
+          </div>
+        </div>
+        {pop > 0 && (
+          <div>
+            <div class="stat-num">{number(lang, pop)}</div>
+            <div class="stat-label">
+              {tr.population} {data.populationYear}
+            </div>
+          </div>
+        )}
+      </div>
+      <div class="year-bars" role="img" aria-label={`${tr.statsEvents}: ${data.years.map((y, i) => `${y}: ${callouts[i]}`).join(", ")}`}>
+        {data.years.map((y, i) => (
+          <div class="year-bar">
+            <div class="fill" style={`height:${Math.round((callouts[i] / max) * 100)}%`} />
+            <span class="v">{number(lang, callouts[i])}</span>
+            <span class="y">{y}</span>
+          </div>
+        ))}
+      </div>
+      <p class="hint">{tr.statsSource}</p>
+    </section>
+  )
+}

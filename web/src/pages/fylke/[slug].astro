@@ -1,0 +1,12 @@
+---
+import FylkePage from "../../views/FylkePage.astro";
+import { FYLKE_LIST, type Fylke } from "../../lib/regions";
+
+export function getStaticPaths() {
+  return FYLKE_LIST.map((fylke) => ({ params: { slug: fylke.slug }, props: { fylke } }));
+}
+
+const { fylke } = Astro.props as { fylke: Fylke };
+---
+
+<FylkePage lang="nb" fylke={fylke} />
